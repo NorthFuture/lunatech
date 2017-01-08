@@ -1,0 +1,53 @@
+<a href="#main">Go back</a>
+
+<br/>
+<input type="text" ng-model="data.search" required="required">
+
+<button ng-click="search()">Search</button>
+
+<div ng-show="result!=null && result.country!=null && result.exact">
+    Country: <span style="font-weight:bold">{{result.country.name}}</span>
+    <table>
+        <tr>
+            <td style="width: 200px">Airport name</td>
+            <td style="width: 200px">Airport type</td>
+            <td style="width: 500px">Runways<br/>
+                <table>
+                    <tr>
+                        <td style="width: 100px">length</td>
+                        <td style="width: 100px">width</td>
+                        <td style="width: 100px">surface</td>
+                        <td style="width: 100px">leIdent</td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+
+        <tr ng-repeat="airport in result.airports">
+            <td style="width: 200px">{{airport.airport.name}}</td>
+            <td style="width: 200px">{{airport.airport.airportType}}</td>
+            <td style="width: 500px">
+                <table>
+                    <tr ng-repeat="runway in airport.runways">
+                        <td style="width: 100px">{{runway.length}}ft</td>
+                        <td style="width: 100px">{{runway.width}}ft</td>
+                        <td style="width: 100px">{{runway.surface.name}}</td>
+                        <td style="width: 100px">{{runway.leIdent}}</td>
+                    </tr>
+                </table>
+            </td>
+
+        </tr>
+
+    </table>
+
+
+</div>
+
+<div ng-show="result!=null && result.country!=null && !result.exact">
+    No results maybe you meant <span style="font-weight:bold">{{result.country.name}}</span>
+</div>
+
+<div ng-show="result!=null && result.country==null">
+    No results
+</div>

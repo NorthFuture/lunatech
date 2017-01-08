@@ -1,0 +1,66 @@
+<a href="#main">Go back</a>
+<br/>
+
+<div style="font:weight: bold">Top countries</div>
+<table>
+    <tr>
+        <td>Country</td>
+        <td>Count</td>
+    </tr>
+
+    <tr ng-repeat="c in report.topCountries">
+        <td>{{c.country.name}}</td>
+        <td>{{c.count}}</td>
+    </tr>
+
+</table>
+
+<hr/>
+
+<div style="font:weight: bold">Bottom countries</div>
+<table>
+    <tr>
+        <td>Country</td>
+        <td>Count</td>
+    </tr>
+
+    <tr ng-repeat="c in report.bottomCountries">
+        <td>{{c.country.name}}</td>
+        <td>{{c.count}}</td>
+    </tr>
+
+</table>
+
+<hr/>
+
+
+<div style="font:weight: bold">Surfaces by country</div>
+<table>
+    <tr>
+        <td>Country</td>
+        <td>Surfaces</td>
+    </tr>
+
+    <tr ng-repeat="c in report.countriesWithSurfaces">
+        <td>{{c.country.name}}</td>
+        <td><span ng-repeat="surface in c.surfaces">{{surface.name}}&nbsp</span></td>
+    </tr>
+
+</table>
+
+<hr/>
+
+<div style="font:weight: bold">Most common runway identifications</div>
+<table>
+    <tr>
+        <td>Runway identification</td>
+        <td>Count</td>
+    </tr>
+
+    <tr ng-repeat="c in report.mostCommonRunwayIdents">
+        <td>{{c.ident}}</td>
+        <td>{{c.count}}</span></td>
+    </tr>
+
+</table>
+
