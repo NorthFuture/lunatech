@@ -8,7 +8,7 @@ import com.lunatech.service.support.Utils.tryClose
 import com.typesafe.scalalogging.Logger
 
 import scala.io.Source
-import scala.util.Try
+import scala.util.{Failure, Success, Try}
 
 class InMemoryDataRepository {
 
@@ -17,10 +17,22 @@ class InMemoryDataRepository {
 object InMemoryDataRepository extends DataRepository {
   val logger = Logger[InMemoryDataRepository]
 
-  private val countries: Seq[Country] = tryClose(getClass.getResourceAsStream("/countries.csv"))(readCountriesFromStream).getOrElse(Seq[Country]())
+  def loadCsvFile[B](file: String, reader: InputStream => Seq[B], defaultalue: Seq[B]): Seq[B] = {
+    tryClose(getClass.getResourceAsStream(file))(reader) match {
+      case Success(result) => result
+      case Failure(e) => {
+        logger.error(e.getMessage, e)
+        defaultalue
+      }
+    }
+  }
+
+  private val countries: Seq[Country] = loadCsvFile("/countries.csv", readCountriesFromStream, Seq[Country]())
+
   private val continents: Seq[Continent] = countries.map(_.continent).distinct
-  private val airports: Seq[Airport] = tryClose(getClass.getResourceAsStream("/airports.csv"))(readAirportsFromStream).getOrElse(Seq[Airport]())
-  private val runways: Seq[Runway] = tryClose(getClass.getResourceAsStream("/runways.csv"))(readRunwaysFromStream).getOrElse(Seq[Runway]())
+
+  private val airports: Seq[Airport] = loadCsvFile("/airports.csv", readAirportsFromStream, Seq[Airport]())
+  private val runways: Seq[Runway] = loadCsvFile("/runways.csv", readRunwaysFromStream, Seq[Runway]())
 
   def getCountries() = countries
 
