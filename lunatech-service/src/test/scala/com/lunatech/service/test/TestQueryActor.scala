@@ -48,7 +48,7 @@ class TestQueryActor(_system: ActorSystem) extends TestKit(_system) with FunSuit
 
   }
 
-  def target() = _system.actorOf(Props(classOf[QueryActor], dataRepository), "QueryActor")
+  def target() = _system.actorOf(Props(classOf[QueryActor], dataRepository))
 
   test("test query country by code exact") {
 
