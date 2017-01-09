@@ -14,19 +14,19 @@ class TestCSVHelper extends FunSuiteLike with BeforeAndAfterAll with ScalaFuture
 
     val result = CSVHelper.splitLine("""01,"a","b","aaa,bbb"""")
 
-    assert("aaa,bbb" == result(3))
-    assert("b" == result(2))
-    assert("a" == result(1))
-    assert("01" == result(0))
+    assert(Some("aaa,bbb") == result(3))
+    assert(Some("b") == result(2))
+    assert(Some("a") == result(1))
+    assert(Some("01") == result(0))
   }
 
   test("test empty field") {
 
     val result = CSVHelper.splitLine("""01,,02""")
 
-    assert("02" == result(2))
-    assert("" == result(1))
-    assert("01" == result(0))
+    assert(Some("02") == result(2))
+    assert(None == result(1))
+    assert(Some("01") == result(0))
   }
 
 }
